@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://jakarta.ee/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Cadastro de Produtos</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+
+        <p:panel header="Cadastro de Produto">
+
+            <p:messages />
+
+            <p:outputLabel value="Nome:" />
+            <p:inputText value="#{produtoBean.produto.nome}" />
+
+            <br/><br/>
+
+            <p:outputLabel value="Preço:" />
+            <p:inputNumber value="#{produtoBean.produto.preco}" />
+
+            <br/><br/>
+
+            <p:commandButton value="Salvar"
+                             action="#{produtoBean.salvar}"
+                             update="tabela mensagens"
+                             icon="pi pi-check" />
+
+        </p:panel>
+
+        <br/>
+
+        <p:dataTable id="tabela"
+                     value="#{produtoBean.produtos}"
+                     var="p"
+                     paginator="true"
+                     rows="5">
+
+            <p:column headerText="Nome">
+                #{p.nome}
+            </p:column>
+
+            <p:column headerText="Preço">
+                #{p.preco}
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</h:body>
+</html>
