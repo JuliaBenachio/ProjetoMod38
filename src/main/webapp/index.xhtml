@@ -1,21 +1,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://jakarta.ee/jsf/html"
+      xmlns:h="jakarta.faces.html"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Cadastro de Produtos</title>
+    <title>Produtos</title>
 </h:head>
 
 <h:body>
 
     <h:form>
 
+        <p:growl id="mensagens" showDetail="true" />
+
         <p:panel header="Cadastro de Produto">
 
-            <p:messages />
-
             <p:outputLabel value="Nome:" />
-            <p:inputText value="#{produtoBean.produto.nome}" />
+            <p:inputText value="#{produtoBean.produto.nome}" required="true"/>
 
             <br/><br/>
 
@@ -24,15 +24,23 @@
 
             <br/><br/>
 
-            <p:commandButton value="Salvar"
-                             action="#{produtoBean.salvar}"
+            <!-- BOTÃO DINÂMICO -->
+            <p:commandButton value="#{produtoBean.isUpdate ? 'Atualizar' : 'Salvar'}"
+                             action="#{produtoBean.isUpdate ? produtoBean.update : produtoBean.add}"
                              update="tabela mensagens"
-                             icon="pi pi-check" />
+                             icon="pi pi-check"/>
+
+            <p:commandButton value="Cancelar"
+                             action="#{produtoBean.cancel}"
+                             update="@form"
+                             icon="pi pi-times"
+                             rendered="#{produtoBean.isUpdate}"/>
 
         </p:panel>
 
         <br/>
 
+        <!-- TABELA -->
         <p:dataTable id="tabela"
                      value="#{produtoBean.produtos}"
                      var="p"
@@ -45,6 +53,21 @@
 
             <p:column headerText="Preço">
                 #{p.preco}
+            </p:column>
+
+            <p:column headerText="Ações">
+
+                <p:commandButton icon="pi pi-pencil"
+                                 action="#{produtoBean.edit(p)}"
+                                 update="@form"
+                                 title="Editar"/>
+
+                <p:commandButton icon="pi pi-trash"
+                                 action="#{produtoBean.delete(p)}"
+                                 update="tabela mensagens"
+                                 title="Excluir"
+                                 style="margin-left:5px"/>
+
             </p:column>
 
         </p:dataTable>

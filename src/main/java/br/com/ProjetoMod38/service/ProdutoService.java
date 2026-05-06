@@ -10,11 +10,19 @@ public class ProdutoService {
     @Inject
     private ProdutoDAO dao;
 
-    public void salvar(Produto p) {
-        dao.salvar(p);
+    public void salvar(Produto produto) {
+        dao.salvar(produto);
     }
 
     public List<Produto> listar() {
         return dao.listar();
+    }
+
+    public void atualizar(Produto produto) {
+        dao.atualizar(produto);
+    }
+
+    public void excluir(Produto produto) {
+        dao.excluir(produto);
     }
 }
